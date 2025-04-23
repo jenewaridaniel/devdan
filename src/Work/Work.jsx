@@ -17,8 +17,8 @@ const Work = () => {
       description:
         "Modern tech marketplace with enhanced UI/UX and performance optimizations",
       link: "https://jaratech.netlify.app/",
-      tags: ["E-commerce", "Next.js", "Tailwind CSS"],
-      status: "production",
+      tags: ["E-commerce", "React.js", "Tailwind CSS"],
+      status: "development",
     },
     {
       title: "Gabby Hotels",
@@ -34,7 +34,7 @@ const Work = () => {
         "Non-profit platform for orphanage support and donation management",
       link: "https://orphansaid.netlify.app/",
       tags: ["Non-profit", "React", "Donation System"],
-      status: "production",
+      status: "development",
     },
   ];
 
