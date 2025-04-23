@@ -339,7 +339,7 @@ const App = () => {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <CircularText
-                text="• LET'S MAKE IT HAPPEN • CONTACT ME • "
+                text=" LET'S MAKE IT HAPPEN • CONTACT ME • "
                 onHover="pulse"
                 spinDuration={25}
                 className="w-64 h-64 md:w-80 md:h-80"
