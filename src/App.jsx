@@ -32,7 +32,7 @@ const App = () => {
   };
 
   const openWhatsApp = () => {
-    window.open(`https://wa.me/234818219533`, "_blank");
+    window.open(`https://wa.me/2348108219533`, "_blank");
   };
 
   return (
