@@ -108,7 +108,7 @@ const App = () => {
             style={{ y: useTransform(y, [0, 1], [0, 80]) }}
           >
             <CircularText
-              text="• REACT • TAILWINDCSS • FIREBASE • "
+              text="• REACT • TAILWINDCSS • FIREBASE • MERN "
               onHover="reverse"
               spinDuration={40}
               className="w-32 h-32 md:w-48 md:h-48"
