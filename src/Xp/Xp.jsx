@@ -19,7 +19,7 @@ const Xp = () => {
       years: 8,
       description:
         "Designing scalable microservices and RESTful APIs with Node.js and Express",
-      tools: "Express.js, Firebase",
+      tools: "Express.js",
     },
     {
       icon: <FaReact className="text-sky-400" size={20} />,
