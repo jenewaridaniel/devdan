@@ -7,7 +7,13 @@ import whatsapp from "../src/assets/whatsapp.png";
 import Tech from "./TechStack/Tech";
 import Xp from "./Xp/Xp";
 import Work from "./Work/Work";
-import { motion, useScroll, useSpring, useTransform, useMotionValue } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useSpring,
+  useTransform,
+  useMotionValue,
+} from "framer-motion";
 import CircularText from "./CirculatText";
 
 const App = () => {
@@ -20,7 +26,7 @@ const App = () => {
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
-    restDelta: 0.001
+    restDelta: 0.001,
   });
 
   // Parallax effects
@@ -41,7 +47,7 @@ const App = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth"
+      behavior: "smooth",
     });
   };
 
@@ -65,13 +71,13 @@ const App = () => {
           exit={{ opacity: 0, y: 20 }}
           onClick={scrollToTop}
           className="fixed bottom-8 right-8 z-50 p-3 bg-gradient-to-br from-red-500 to-red-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-          whileHover={{ 
+          whileHover={{
             scale: 1.1,
-            boxShadow: "0 0 20px rgba(239, 68, 68, 0.5)"
+            boxShadow: "0 0 20px rgba(239, 68, 68, 0.5)",
           }}
-          whileTap={{ 
+          whileTap={{
             scale: 0.95,
-            boxShadow: "0 0 10px rgba(239, 68, 68, 0.3)"
+            boxShadow: "0 0 10px rgba(239, 68, 68, 0.3)",
           }}
         >
           <FiArrowUp className="text-white text-xl" />
@@ -85,12 +91,12 @@ const App = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         {/* Hero Section */}
-        <motion.div 
+        <motion.div
           className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center p-4 sm:p-8 relative overflow-hidden"
           style={{ y: yRange }}
         >
           {/* Circular Text Elements */}
-          <motion.div 
+          <motion.div
             className="absolute right-10 top-1/4 opacity-20 hover:opacity-100 transition-opacity duration-500 z-0"
             style={{ y: useTransform(y, [0, 1], [0, -100]) }}
           >
@@ -103,7 +109,7 @@ const App = () => {
             />
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="absolute left-10 bottom-1/4 opacity-20 hover:opacity-100 transition-opacity duration-500 z-0"
             style={{ y: useTransform(y, [0, 1], [0, 80]) }}
           >
@@ -138,7 +144,7 @@ const App = () => {
           <div className="container mx-auto max-w-6xl relative z-10">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16">
               {/* Left Column - Text Content */}
-              <motion.div 
+              <motion.div
                 className="lg:w-1/2 space-y-6 md:space-y-8"
                 initial={{ x: -50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
@@ -202,14 +208,14 @@ const App = () => {
               </motion.div>
 
               {/* Right Column - Profile Image */}
-              <motion.div 
+              <motion.div
                 className="lg:w-1/2 flex justify-center lg:justify-end mt-8 lg:mt-0"
                 initial={{ x: 50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
                 <div className="relative group">
-                  <motion.div 
+                  <motion.div
                     className="relative z-10"
                     whileHover={{ scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -224,7 +230,7 @@ const App = () => {
                   </motion.div>
 
                   {/* Floating tech badges */}
-                  <motion.div 
+                  <motion.div
                     className="absolute -bottom-4 -left-4 bg-gray-800 border border-gray-700 rounded-full p-2 shadow-lg"
                     animate={{
                       y: [0, -10, 0],
@@ -240,7 +246,7 @@ const App = () => {
                     </div>
                   </motion.div>
 
-                  <motion.div 
+                  <motion.div
                     className="absolute -top-4 -right-4 bg-gray-800 border border-gray-700 rounded-full p-2 shadow-lg"
                     animate={{
                       y: [0, -15, 0],
@@ -249,7 +255,7 @@ const App = () => {
                       duration: 4,
                       repeat: Infinity,
                       ease: "easeInOut",
-                      delay: 0.5
+                      delay: 0.5,
                     }}
                   >
                     <div className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center">
@@ -262,7 +268,7 @@ const App = () => {
           </div>
 
           {/* Social links */}
-          <motion.div 
+          <motion.div
             className="absolute bottom-8 left-0 right-0 flex justify-center gap-6"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -333,7 +339,7 @@ const App = () => {
           className="py-16 bg-gradient-to-t from-gray-900 to-black relative overflow-hidden"
         >
           <div className="container mx-auto flex flex-col items-center justify-center">
-            <motion.div 
+            <motion.div
               className="mb-12 relative"
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
@@ -349,20 +355,20 @@ const App = () => {
                 <motion.button
                   onClick={openWhatsApp}
                   className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-full font-medium shadow-lg"
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.05,
-                    boxShadow: "0 0 20px rgba(239, 68, 68, 0.5)"
+                    boxShadow: "0 0 20px rgba(239, 68, 68, 0.5)",
                   }}
-                  whileTap={{ 
+                  whileTap={{
                     scale: 0.98,
-                    boxShadow: "0 0 10px rgba(239, 68, 68, 0.3)"
+                    boxShadow: "0 0 10px rgba(239, 68, 68, 0.3)",
                   }}
                 >
                   Let's Work
                 </motion.button>
               </div>
             </motion.div>
-            <motion.p 
+            <motion.p
               className="text-gray-400 text-sm mt-8"
               whileHover={{ scale: 1.05 }}
             >
