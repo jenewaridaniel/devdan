@@ -34,7 +34,7 @@ const Xp = () => {
       title: "Database Systems",
       years: 7,
       description: "Optimizing data storage and retrieval solutions",
-      tools: "MongoDB, Firebase, Prisma, DynamoDB",
+      tools: "MongoDB, Firebase",
     },
     {
       icon: <FaServer className="text-violet-500" size={20} />,
