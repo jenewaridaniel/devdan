@@ -8,6 +8,7 @@ import Tech from "./TechStack/Tech";
 import Xp from "./Xp/Xp";
 import Work from "./Work/Work";
 import { motion } from "framer-motion";
+import CircularText from "./CirculatText";
 
 const App = () => {
   const [isHovering, setIsHovering] = useState(false);
@@ -35,7 +36,7 @@ const App = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative overflow-x-hidden">
       {/* Scroll to top button */}
       {showScrollButton && (
         <motion.button
@@ -51,6 +52,29 @@ const App = () => {
 
       {/* Main content */}
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center p-4 sm:p-8 relative overflow-hidden">
+        {/* Circular Text Element - Floating in background */}
+        <div className="absolute right-10 top-1/4 opacity-20 hover:opacity-100 transition-opacity duration-500 z-0">
+          <CircularText
+            text="• TECH TREK • FRONTEND DEV • "
+            onHover="speedUp"
+            spinDuration={30}
+            className="w-40 h-40 md:w-60 md:h-60"
+            textClassName="text-red-400 font-mono text-xs tracking-wider"
+          />
+        </div>
+
+        {/* Another Circular Text Element - Bottom left */}
+        <div className="absolute left-10 bottom-1/4 opacity-20 hover:opacity-100 transition-opacity duration-500 z-0">
+          <CircularText
+            text="• REACT • TAILWINDCSS • FIREBASE • "
+            onHover="reverse"
+            spinDuration={40}
+            className="w-32 h-32 md:w-48 md:h-48"
+            textClassName="text-gray-400 font-mono text-[10px] tracking-wider"
+            reverse
+          />
+        </div>
+
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
           {[...Array(20)].map((_, i) => (
@@ -193,6 +217,32 @@ const App = () => {
 
       <div>
         <Work />
+      </div>
+
+      {/* Circular Text Footer Element */}
+      <div className="py-16 bg-gradient-to-t from-gray-900 to-black relative overflow-hidden">
+        <div className="container mx-auto flex flex-col items-center justify-center">
+          <div className="mb-12 relative">
+            <CircularText
+              text="• LET'S MAKE IT HAPPEN • CONTACT ME • "
+              onHover="pulse"
+              spinDuration={25}
+              className="w-64 h-64 md:w-80 md:h-80"
+              textClassName="text-red-500 font-mono text-sm font-bold tracking-widest"
+            />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <button
+                onClick={openWhatsApp}
+                className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-red-500/30"
+              >
+                Let's Work
+              </button>
+            </div>
+          </div>
+          <p className="text-gray-400 text-sm mt-8">
+            © {new Date().getFullYear()} Tech Trek. All rights reserved.
+          </p>
+        </div>
       </div>
     </div>
   );
