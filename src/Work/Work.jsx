@@ -36,6 +36,16 @@ const Work = () => {
       tags: ["Non-profit", "React", "Donation System"],
       status: "development",
     },
+    {
+      {
+        title: "Notiva",
+        description:
+          "Smart PDF summarizer for students to extract key points, keywords, and notes from large documents",
+        link: "https://notiva.netlify.app/", 
+        tags: ["Education", "React", "PDF Summarizer", "Firebase"],
+        status: "development",
+      }
+      
   ];
 
   const statusColors = {
