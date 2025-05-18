@@ -36,7 +36,6 @@ const Work = () => {
       tags: ["Non-profit", "React", "Donation System"],
       status: "development",
     },
-    {
       {
         title: "Notiva",
         description:
