@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { FiArrowUp, FiMessageSquare } from "react-icons/fi";
+import { FiArrowUp, FiMessageSquare, FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import TrueFocus from "./TrueFocus";
 import ProfileImage from "../src/assets/monkey.jpeg";
-import github from "../src/assets/github.png";
-import whatsapp from "../src/assets/whatsapp.png";
 import Tech from "./TechStack/Tech";
 import Xp from "./Xp/Xp";
 import Work from "./Work/Work";
@@ -13,6 +11,7 @@ import {
   useSpring,
   useTransform,
   useMotionValue,
+  AnimatePresence
 } from "framer-motion";
 import CircularText from "./CirculatText";
 
@@ -20,6 +19,7 @@ const App = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   // Enhanced scroll tracking with Framer Motion
   const { scrollYProgress } = useScroll();
@@ -31,15 +31,32 @@ const App = () => {
 
   // Parallax effects
   const y = useMotionValue(0);
-  const yRange = useTransform(y, [0, 1], [0, -50]);
-  const opacityRange = useTransform(y, [0, 0.5, 1], [1, 0.5, 0]);
+  const yRange = useTransform(y, [0, 1], [0, -20]);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
       setShowScrollButton(window.scrollY > 300);
       y.set(window.scrollY / (document.body.scrollHeight - window.innerHeight));
+      
+      // Update active section based on scroll position
+      const sections = ['home', 'tech', 'experience', 'work'];
+      const scrollPosition = window.scrollY + 200;
+      
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const offsetHeight = element.offsetHeight;
+          
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
     };
+    
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [y]);
@@ -55,94 +72,103 @@ const App = () => {
     window.open(`https://wa.me/2348085997087`, "_blank");
   };
 
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      window.scrollTo({
+        top: element.offsetTop - 80,
+        behavior: "smooth"
+      });
+    }
+  };
+
   return (
-    <div className="relative overflow-x-hidden">
+    <div className="relative overflow-x-hidden bg-gray-50 text-gray-800">
       {/* Smooth scroll progress bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1.5 bg-red-500 origin-left z-50"
+        className="fixed top-0 left-0 right-0 h-1 bg-gray-300 origin-left z-50"
         style={{ scaleX }}
       />
 
-      {/* Scroll to top button */}
-      {showScrollButton && (
-        <motion.button
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 p-3 bg-gradient-to-br from-red-500 to-red-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-          whileHover={{
-            scale: 1.1,
-            boxShadow: "0 0 20px rgba(239, 68, 68, 0.5)",
-          }}
-          whileTap={{
-            scale: 0.95,
-            boxShadow: "0 0 10px rgba(239, 68, 68, 0.3)",
-          }}
-        >
-          <FiArrowUp className="text-white text-xl" />
-        </motion.button>
-      )}
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 bg-white bg-opacity-90 backdrop-blur-sm shadow-sm z-40">
+        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+          <motion.div 
+            className="text-xl font-medium text-gray-800"
+            whileHover={{ scale: 1.05 }}
+          >
+            Tech Trek
+          </motion.div>
+          
+          <div className="hidden md:flex space-x-8">
+            {['home', 'tech', 'experience', 'work'].map((section) => (
+              <button
+                key={section}
+                onClick={() => scrollToSection(section)}
+                className={`relative px-1 py-2 text-sm font-medium transition-colors ${
+                  activeSection === section ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                {section.charAt(0).toUpperCase() + section.slice(1)}
+                {activeSection === section && (
+                  <motion.div 
+                    layoutId="navUnderline"
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-800"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+          
+          <motion.button
+            onClick={openWhatsApp}
+            className="hidden md:flex items-center gap-2 p-3.5 px-3 bg-gray-800 text-white rounded-md text-sm font-medium"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <FiMessageSquare size={16} />
+            Contact
+          </motion.button>
+        </div>
+      </nav>
 
-      {/* Main content with smooth transitions */}
+      {/* Scroll to top button */}
+      <AnimatePresence>
+        {showScrollButton && (
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            onClick={scrollToTop}
+            className="fixed bottom-8 right-8 z-50 p-3 bg-gray-800 text-white rounded-full shadow-lg"
+            whileHover={{
+              scale: 1.1,
+              boxShadow: "0 0 20px rgba(0, 0, 0, 0.1)",
+            }}
+            whileTap={{
+              scale: 0.95,
+            }}
+          >
+            <FiArrowUp className="text-xl" />
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* Main content */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         {/* Hero Section */}
-        <motion.div
-          className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center p-4 sm:p-8 relative overflow-hidden"
+        <motion.section
+          id="home"
+          className="min-h-screen bg-white flex items-center justify-center pt-20 px-4 sm:px-8 relative overflow-hidden"
           style={{ y: yRange }}
         >
-          {/* Circular Text Elements */}
-          <motion.div
-            className="absolute right-10 top-1/4 opacity-20 hover:opacity-100 transition-opacity duration-500 z-0"
-            style={{ y: useTransform(y, [0, 1], [0, -100]) }}
-          >
-            <CircularText
-              text="• TECH TREK • FRONTEND DEV • "
-              onHover="speedUp"
-              spinDuration={30}
-              className="w-40 h-40 md:w-60 md:h-60"
-              textClassName="text-red-400 font-mono text-xs tracking-wider"
-            />
-          </motion.div>
-
-          <motion.div
-            className="absolute left-10 bottom-1/4 opacity-20 hover:opacity-100 transition-opacity duration-500 z-0"
-            style={{ y: useTransform(y, [0, 1], [0, 80]) }}
-          >
-            <CircularText
-              text="• REACT • TAILWINDCSS • FIREBASE • MERN "
-              onHover="reverse"
-              spinDuration={40}
-              className="w-32 h-32 md:w-48 md:h-48"
-              textClassName="text-gray-400 font-mono text-[10px] tracking-wider"
-              reverse
-            />
-          </motion.div>
-
-          {/* Animated background elements */}
-          <div className="absolute inset-0 overflow-hidden">
-            {[...Array(20)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute rounded-full bg-red-500 opacity-5"
-                style={{
-                  width: Math.random() * 300 + 100,
-                  height: Math.random() * 300 + 100,
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  x: useTransform(y, [0, 1], [0, Math.sin(i) * 50]),
-                  y: useTransform(y, [0, 1], [0, Math.cos(i) * 50]),
-                }}
-              />
-            ))}
-          </div>
-
           <div className="container mx-auto max-w-6xl relative z-10">
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
               {/* Left Column - Text Content */}
               <motion.div
                 className="lg:w-1/2 space-y-6 md:space-y-8"
@@ -150,36 +176,37 @@ const App = () => {
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                <div className="space-y-3 md:space-y-6">
-                  <h1 className="text-gray-50 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight">
+                <div className="space-y-4 md:space-y-6">
+                  <h1 className="text-gray-800 text-3xl sm:text-4xl md:text-5xl font-light">
                     Hello, I'm
                   </h1>
 
-                  <div className="relative h-20 sm:h-24 md:h-32">
+                  <div className="relative text-gray-950/90 h-20 sm:h-24 md:h-32">
                     <TrueFocus
                       sentence="Tech Trek"
                       manualMode={false}
                       blurAmount={5}
-                      borderColor="rgba(255, 65, 65, 0.8)"
-                      glowColor="rgba(255, 65, 65, 0.4)"
+                      borderColor="rgba(75, 85, 99, 0.8)"
+                      glowColor="rgba(75, 85, 99, 0.4)"
                       animationDuration={1.5}
                       pauseBetweenAnimations={0.5}
                     />
                   </div>
 
-                  <p className="text-gray-300 text-lg sm:text-xl md:text-2xl font-medium">
-                    Frontend Developer
-                  </p>
+                  <h2 className="text-gray-600 text-xl sm:text-2xl md:text-3xl font-medium">
+                    Frontend Developer & UI Specialist
+                  </h2>
 
-                  <p className="text-gray-400 text-base md:text-lg max-w-lg">
-                    Tch... Just building clean, efficient React interfaces with
-                    modern web tech. Nothing too troublesome.
+                  <p className="text-gray-500 text-base md:text-lg max-w-lg leading-relaxed">
+                    I craft pixel-perfect, responsive interfaces with React and modern web technologies. 
+                    Focused on creating seamless user experiences with clean, efficient code.
                   </p>
                 </div>
 
                 <div className="flex flex-wrap gap-4 pt-2">
                   <motion.button
-                    className="px-6 py-2.5 sm:px-8 sm:py-3 bg-transparent border border-red-500 text-red-400 rounded-full text-base sm:text-lg font-medium hover:bg-red-500 hover:bg-opacity-10 transition-all duration-300"
+                    onClick={() => scrollToSection('work')}
+                    className="px-6 py-2.5 sm:px-8 sm:py-3 bg-gray-800 text-white rounded-md text-base sm:text-lg font-medium hover:bg-gray-700 transition-all duration-300 flex items-center"
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}
                     whileHover={{ scale: 1.05 }}
@@ -197,7 +224,7 @@ const App = () => {
 
                   <motion.button
                     onClick={openWhatsApp}
-                    className="flex items-center gap-2 px-6 py-2.5 sm:px-8 sm:py-3 bg-transparent border border-gray-600 text-gray-300 rounded-full text-base sm:text-lg font-medium hover:bg-gray-800 hover:bg-opacity-50 transition-all duration-300"
+                    className="flex items-center gap-2 px-6 py-2.5 sm:px-8 sm:py-3 bg-transparent border border-gray-300 text-gray-700 rounded-md text-base sm:text-lg font-medium hover:bg-gray-50 transition-all duration-300"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -220,18 +247,19 @@ const App = () => {
                     whileHover={{ scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
-                    <img
-                      src={ProfileImage}
-                      alt="Tech Trek"
-                      className="w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full object-cover border-4 border-gray-800 group-hover:border-red-500 transition-all duration-500 shadow-xl group-hover:shadow-red-500/20"
-                    />
-                    <div className="absolute inset-0 rounded-full border-2 border-red-500 opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none"></div>
-                    <div className="absolute inset-0 rounded-full bg-red-500 mix-blend-screen opacity-0 group-hover:opacity-10 transition-all duration-500 pointer-events-none"></div>
+                    <div className="relative overflow-hidden rounded-lg shadow-xl">
+                      <img
+                        src={ProfileImage}
+                        alt="Tech Trek"
+                        className="w-full max-w-md rounded-lg object-cover transform group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
                   </motion.div>
 
                   {/* Floating tech badges */}
                   <motion.div
-                    className="absolute -bottom-4 -left-4 bg-gray-800 border border-gray-700 rounded-full p-2 shadow-lg"
+                    className="absolute -bottom-4 -left-4 bg-white border border-gray-200 rounded-full p-2 shadow-lg"
                     animate={{
                       y: [0, -10, 0],
                     }}
@@ -241,13 +269,13 @@ const App = () => {
                       ease: "easeInOut",
                     }}
                   >
-                    <div className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
                       <span className="text-lg">⚛️</span>
                     </div>
                   </motion.div>
 
                   <motion.div
-                    className="absolute -top-4 -right-4 bg-gray-800 border border-gray-700 rounded-full p-2 shadow-lg"
+                    className="absolute -top-4 -right-4 bg-white border border-gray-200 rounded-full p-2 shadow-lg"
                     animate={{
                       y: [0, -15, 0],
                     }}
@@ -258,7 +286,7 @@ const App = () => {
                       delay: 0.5,
                     }}
                   >
-                    <div className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
                       <span className="text-lg">💻</span>
                     </div>
                   </motion.div>
@@ -278,65 +306,84 @@ const App = () => {
               href="https://github.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-red-400 transition-colors duration-300"
+              className="text-gray-500 hover:text-gray-800 transition-colors duration-300"
               aria-label="github"
               whileHover={{ y: -3 }}
             >
-              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700 transition-all duration-300">
-                <img src={github} alt="GitHub" className="w-5 h-5" />
+              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-300">
+                <FiGithub className="w-5 h-5" />
+              </div>
+            </motion.a>
+
+            <motion.a
+              href="https://linkedin.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-gray-800 transition-colors duration-300"
+              aria-label="linkedin"
+              whileHover={{ y: -3 }}
+            >
+              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-300">
+                <FiLinkedin className="w-5 h-5" />
               </div>
             </motion.a>
 
             <motion.button
               onClick={openWhatsApp}
-              className="text-gray-400 hover:text-red-400 transition-colors duration-300"
+              className="text-gray-500 hover:text-gray-800 transition-colors duration-300"
               aria-label="whatsapp"
               whileHover={{ y: -3 }}
             >
-              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700 transition-all duration-300">
-                <img src={whatsapp} alt="WhatsApp" className="w-5 h-5" />
+              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-300">
+                <FiMail className="w-5 h-5" />
               </div>
             </motion.button>
           </motion.div>
-        </motion.div>
+        </motion.section>
 
         {/* Tech Stack Section */}
-        <motion.div
+        <motion.section
+          id="tech"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, type: "spring" }}
+          className="py-20 bg-gray-100"
         >
           <Tech />
-        </motion.div>
+        </motion.section>
 
         {/* Experience Section */}
-        <motion.div
+        <motion.section
+          id="experience"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, type: "spring", delay: 0.1 }}
+          className="py-20 bg-white"
         >
           <Xp />
-        </motion.div>
+        </motion.section>
 
         {/* Work Section */}
-        <motion.div
+        <motion.section
+          id="work"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, type: "spring", delay: 0.2 }}
+          className="py-20 bg-gray-50"
         >
           <Work />
-        </motion.div>
+        </motion.section>
 
         {/* Footer Section */}
-        <motion.div
+        <motion.footer
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="py-16 bg-gradient-to-t from-gray-900 to-black relative overflow-hidden"
+          className="py-16 bg-gray-800 text-white relative overflow-hidden"
         >
           <div className="container mx-auto flex flex-col items-center justify-center">
             <motion.div
@@ -345,37 +392,63 @@ const App = () => {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <CircularText
-                text=" LET'S MAKE IT HAPPEN • CONTACT ME • "
+                text=" LET'S COLLABORATE • GET IN TOUCH • "
                 onHover="pulse"
                 spinDuration={25}
                 className="w-64 h-64 md:w-80 md:h-80"
-                textClassName="text-red-500 font-mono text-sm font-bold tracking-widest"
+                textClassName="text-white font-mono text-sm font-medium tracking-widest"
               />
               <div className="absolute inset-0 flex items-center justify-center">
                 <motion.button
                   onClick={openWhatsApp}
-                  className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-full font-medium shadow-lg"
+                  className="px-5 py-3 bg-white text-gray-800 rounded-md font-medium shadow-lg hover:bg-gray-100 transition-colors"
                   whileHover={{
                     scale: 1.05,
-                    boxShadow: "0 0 20px rgba(239, 68, 68, 0.5)",
+                    boxShadow: "0 0 20px rgba(255, 255, 255, 0.2)",
                   }}
                   whileTap={{
                     scale: 0.98,
-                    boxShadow: "0 0 10px rgba(239, 68, 68, 0.3)",
                   }}
                 >
                   Let's Work
                 </motion.button>
               </div>
             </motion.div>
+            
+            <div className="flex gap-6 mb-8">
+              <motion.a 
+                href="https://github.com/" 
+                target="_blank"
+                whileHover={{ y: -3 }}
+                className="text-gray-300 hover:text-white transition-colors"
+              >
+                <FiGithub className="w-6 h-6" />
+              </motion.a>
+              <motion.a 
+                href="https://linkedin.com/" 
+                target="_blank"
+                whileHover={{ y: -3 }}
+                className="text-gray-300 hover:text-white transition-colors"
+              >
+                <FiLinkedin className="w-6 h-6" />
+              </motion.a>
+              <motion.button 
+                onClick={openWhatsApp}
+                whileHover={{ y: -3 }}
+                className="text-gray-300 hover:text-white transition-colors"
+              >
+                <FiMail className="w-6 h-6" />
+              </motion.button>
+            </div>
+            
             <motion.p
-              className="text-gray-400 text-sm mt-8"
+              className="text-gray-400 text-sm"
               whileHover={{ scale: 1.05 }}
             >
               © {new Date().getFullYear()} Tech Trek. All rights reserved.
             </motion.p>
           </div>
-        </motion.div>
+        </motion.footer>
       </motion.div>
     </div>
   );

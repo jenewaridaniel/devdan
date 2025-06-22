@@ -6,60 +6,66 @@ import {
   SiFirebase,
   SiJavascript,
   SiTailwindcss,
+  SiExpress,
 } from "react-icons/si";
-import { GiSpiderWeb } from "react-icons/gi";
+import { TbBrandFramerMotion } from "react-icons/tb";
 
 const Tech = () => {
-  const techStack = [
+  const techCategories = [
     {
-      name: "MongoDB",
-      icon: <SiMongodb className="text-green-400" />,
-      color: "from-green-900 to-green-700",
+      title: "Frontend",
+      items: [
+        {
+          name: "React",
+          icon: <FaReact className="text-blue-500" size={24} />,
+        },
+        {
+          name: "JavaScript",
+          icon: <SiJavascript className="text-yellow-400" size={24} />,
+        },
+        {
+          name: "Tailwind CSS",
+          icon: <SiTailwindcss className="text-cyan-400" size={24} />,
+        },
+        {
+          name: "Framer Motion",
+          icon: <TbBrandFramerMotion className="text-purple-500" size={24} />,
+        },
+      ],
     },
     {
-      name: "Express",
-      icon: <FaNodeJs className="text-gray-300" />,
-      color: "from-gray-800 to-gray-600",
+      title: "Backend",
+      items: [
+        {
+          name: "Node.js",
+          icon: <FaNodeJs className="text-green-500" size={24} />,
+        },
+        {
+          name: "Express",
+          icon: <SiExpress className="text-gray-300" size={24} />,
+        },
+        {
+          name: "Python",
+          icon: <FaPython className="text-blue-400" size={24} />,
+        },
+      ],
     },
     {
-      name: "React",
-      icon: <FaReact className="text-blue-400" />,
-      color: "from-blue-900 to-blue-700",
-    },
-    {
-      name: "Node.js",
-      icon: <FaNodeJs className="text-green-500" />,
-      color: "from-green-800 to-green-600",
-    },
-    {
-      name: "GitHub",
-      icon: <FaGithub className="text-gray-200" />,
-      color: "from-gray-900 to-gray-700",
-    },
-    {
-      name: "Framer Motion",
-      icon: <GiSpiderWeb className="text-purple-400" />,
-      color: "from-purple-900 to-purple-700",
-    },
-    {
-      name: "Firebase",
-      icon: <SiFirebase className="text-orange-400" />,
-      color: "from-orange-900 to-orange-700",
-    },
-    {
-      name: "Python",
-      icon: <FaPython className="text-blue-300" />,
-      color: "from-blue-800 to-blue-600",
-    },
-    {
-      name: "JavaScript",
-      icon: <SiJavascript className="text-yellow-300" />,
-      color: "from-yellow-900 to-yellow-700",
-    },
-    {
-      name: "Tailwind CSS",
-      icon: <SiTailwindcss className="text-cyan-300" />,
-      color: "from-cyan-900 to-cyan-700",
+      title: "Database & Infrastructure",
+      items: [
+        {
+          name: "MongoDB",
+          icon: <SiMongodb className="text-green-400" size={24} />,
+        },
+        {
+          name: "Firebase",
+          icon: <SiFirebase className="text-orange-400" size={24} />,
+        },
+        {
+          name: "GitHub",
+          icon: <FaGithub className="text-gray-800" size={24} />,
+        },
+      ],
     },
   ];
 
@@ -74,7 +80,7 @@ const Tech = () => {
     },
   };
 
-  const item = {
+  const categoryVariant = {
     hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
@@ -86,13 +92,12 @@ const Tech = () => {
     },
   };
 
-  const joke = {
+  const itemVariant = {
     hidden: { scale: 0.9, opacity: 0 },
     visible: {
       scale: 1,
       opacity: 1,
       transition: {
-        delay: 1.8,
         type: "spring",
         stiffness: 200,
       },
@@ -100,66 +105,93 @@ const Tech = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black py-16 px-4 sm:px-6 lg:px-8">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
         <motion.div
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 mb-4">
-            Tech Stack
+          <span className="text-sm font-medium text-gray-500 tracking-wider">
+            TECHNOLOGIES
+          </span>
+          <h2 className="mt-4 text-3xl md:text-4xl font-bold text-gray-900">
+            My Tech Stack
           </h2>
-          <p className="text-lg text-gray-400 max-w-3xl mx-auto">
-            The digital tools I wield to craft exceptional experiences
+          <div className="mt-6 h-0.5 w-16 mx-auto bg-gradient-to-r from-gray-100 via-gray-400 to-gray-100" />
+          <p className="mt-6 text-lg text-gray-600 max-w-3xl mx-auto">
+            Tools and technologies I use to build high-quality applications
           </p>
         </motion.div>
 
         <motion.div
           variants={container}
           initial="hidden"
-          animate="visible"
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
-          {techStack.map((tech, index) => (
+          {techCategories.map((category, index) => (
             <motion.div
               key={index}
-              variants={item}
-              whileHover={{
-                y: -8,
-                scale: 1.05,
-                boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5)",
-              }}
-              className={`bg-gradient-to-br ${tech.color} rounded-xl p-6 shadow-lg flex flex-col items-center justify-center cursor-default border border-gray-800 hover:border-opacity-50 transition-all duration-300`}
+              variants={categoryVariant}
+              className="bg-gray-50 rounded-xl p-6 border border-gray-200"
             >
-              <div className="text-4xl mb-4">{tech.icon}</div>
-              <h3 className="text-lg font-semibold text-gray-100">
-                {tech.name}
+              <h3 className="text-xl font-semibold text-gray-800 mb-6">
+                {category.title}
               </h3>
+              <div className="grid grid-cols-2 gap-4">
+                {category.items.map((tech, techIndex) => (
+                  <motion.div
+                    key={techIndex}
+                    variants={itemVariant}
+                    whileHover={{ y: -4 }}
+                    className="flex flex-col items-center p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-all"
+                  >
+                    <div className="mb-3">{tech.icon}</div>
+                    <span className="text-sm font-medium text-gray-700">
+                      {tech.name}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
             </motion.div>
           ))}
         </motion.div>
 
         <motion.div
-          variants={joke}
-          initial="hidden"
-          animate="visible"
-          className="mt-20 text-center"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+          className="mt-20 bg-gradient-to-r from-blue-50 to-cyan-50 p-8 rounded-xl border border-blue-100"
         >
-          <div className="inline-block bg-gradient-to-r from-gray-800 to-gray-900 px-8 py-5 rounded-xl shadow-2xl border-l-4 border-red-500">
-            <p className="text-gray-300 font-medium">
-              "Why do programmers prefer dark mode?
-              <br />
-              <span className="text-red-400 font-bold">
-                Because light attracts bugs!
-              </span>{" "}
-              🐛"
+          <div className="max-w-3xl mx-auto text-center">
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+              Always Learning
+            </h3>
+            <p className="text-gray-600 mb-6">
+              I'm continuously expanding my skill set to stay current with
+              industry trends and deliver cutting-edge solutions.
             </p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {["TypeScript", "Next.js", "GraphQL", "AWS", "Docker"].map(
+                (tech, index) => (
+                  <span
+                    key={index}
+                    className="text-xs font-medium px-3 py-1.5 rounded-full bg-white text-gray-700 border border-gray-200"
+                  >
+                    {tech}
+                  </span>
+                )
+              )}
+            </div>
           </div>
         </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
 
