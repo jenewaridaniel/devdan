@@ -177,7 +177,7 @@ const Tech = () => {
               industry trends and deliver cutting-edge solutions.
             </p>
             <div className="flex flex-wrap justify-center gap-2">
-              {["TypeScript", "Next.js", "GraphQL", "AWS", "Docker"].map(
+              {["TypeScript", "Next.js"].map(
                 (tech, index) => (
                   <span
                     key={index}

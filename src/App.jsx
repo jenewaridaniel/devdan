@@ -303,7 +303,7 @@ const App = () => {
             transition={{ delay: 0.6 }}
           >
             <motion.a
-              href="https://github.com/"
+              href="https://github.com/jenewaridaniel"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-gray-800 transition-colors duration-300"
@@ -315,18 +315,7 @@ const App = () => {
               </div>
             </motion.a>
 
-            <motion.a
-              href="https://linkedin.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-500 hover:text-gray-800 transition-colors duration-300"
-              aria-label="linkedin"
-              whileHover={{ y: -3 }}
-            >
-              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-300">
-                <FiLinkedin className="w-5 h-5" />
-              </div>
-            </motion.a>
+          
 
             <motion.button
               onClick={openWhatsApp}

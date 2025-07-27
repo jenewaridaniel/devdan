@@ -7,72 +7,76 @@ import {
   FaReact,
   FaNodeJs,
   FaCloud,
+  FaMobile,
+  FaPalette,
 } from "react-icons/fa";
+import {
+  SiNextdotjs,
+  SiFirebase,
+  SiTailwindcss,
+} from "react-icons/si";
 
-const Xp = () => {
+const ExperienceSection = () => {
   const [years, setYears] = useState({
     frontend: 0,
     backend: 0,
-    database: 0,
-    total: 0
+    total: 0,
   });
 
   const expertiseAreas = [
     {
-      icon: <FaReact className="text-sky-500" size={18} />,
+      icon: <FaReact className="text-blue-500" size={20} />,
       title: "Frontend Engineering",
-      years: 8.5,
-      description: "Building responsive, accessible user interfaces with modern frameworks",
+      years: 8,
+      description:
+        "Architecting high-performance, scalable user interfaces with cutting-edge technologies",
       highlights: [
-        "React ecosystem",
-        "Next.js",
-        "State management",
-        "Component architecture",
-        "Performance optimization",
-        "Accessibility",
-        "Animation",
-        "TypeScript"
-      ]
+        "React & Next.js",
+        "State Management",
+        "Micro Frontends",
+        "Performance Optimization",
+        "Accessibility (a11y)",
+        "Responsive Design",
+        "Design Systems",
+      ],
+      tools: [
+        { name: "React", icon: <FaReact className="text-blue-500" /> },
+      
+        { name: "Next.js", icon: <SiNextdotjs /> },
+        { name: "Tailwind", icon: <SiTailwindcss className="text-cyan-500" /> },
+      ],
     },
     {
-      icon: <FaNodeJs className="text-green-500" size={18} />,
-      title: "Backend Development",
-      years: 0.5,
-      description: "Developing server-side applications and APIs",
+      icon: <FaCloud className="text-green-500" size={20} />,
+      title: "Backend & BaaS",
+      years: 1,
+      description:
+        "Implementing serverless architectures and backend solutions",
       highlights: [
-        "Node.js",
-        "Express",
-        "REST APIs",
+        "Firebase Services",
+        "Cloud Functions",
         "Authentication",
-        "Basic microservices"
-      ]
+        "API Integration",
+        "Serverless Architecture",
+        "NoSQL Databases",
+        "Real-time Data",
+      ],
+      tools: [
+        { name: "Firebase", icon: <SiFirebase className="text-amber-500" /> },
+        { name: "Node.js", icon: <FaNodeJs className="text-green-500" /> },
+      ],
     },
-    {
-      icon: <FaDatabase className="text-amber-500" size={18} />,
-      title: "Database Systems",
-      years: 4,
-      description: "Designing and optimizing data storage solutions",
-      highlights: [
-        "Firebase",
-        "MongoDB",
-        "Data modeling",
-        "Query optimization",
-        "Real-time updates"
-      ]
-    }
   ];
 
   useEffect(() => {
-    // Animate the numbers counting up
     const animateValues = () => {
       const targetValues = {
-        frontend: 8.5,
-        backend: 0.5,
-        database: 4,
-        total: 9
+        frontend: 8,
+        backend: 1,
+        total: 8,
       };
 
-      const duration = 2000; // 2 seconds total
+      const duration = 2000;
       const steps = 50;
       const increment = targetValues.total / steps;
 
@@ -81,21 +85,20 @@ const Xp = () => {
 
       const interval = setInterval(() => {
         step++;
-        
-        Object.keys(targetValues).forEach(key => {
+
+        Object.keys(targetValues).forEach((key) => {
           if (currentValues[key] < targetValues[key]) {
             currentValues[key] = Math.min(
-              currentValues[key] + (targetValues[key] / steps),
+              currentValues[key] + targetValues[key] / steps,
               targetValues[key]
             );
           }
         });
 
         setYears({
-          frontend: parseFloat(currentValues.frontend.toFixed(1)),
+          frontend: Math.floor(currentValues.frontend),
           backend: parseFloat(currentValues.backend.toFixed(1)),
-          database: parseFloat(currentValues.database.toFixed(1)),
-          total: Math.floor(currentValues.total)
+          total: Math.floor(currentValues.total),
         });
 
         if (step >= steps) {
@@ -110,7 +113,7 @@ const Xp = () => {
   }, []);
 
   return (
-    <section className="py-20 px-6 bg-white">
+    <section className="py-20 px-4 sm:px-6 bg-gray-50">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -119,51 +122,79 @@ const Xp = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-sm font-medium text-gray-500 tracking-wider">
-            PROFESSIONAL JOURNEY
+          <span className="text-xs font-semibold tracking-wider text-blue-600 uppercase">
+            Professional Expertise
           </span>
-          <h2 className="mt-4 text-3xl md:text-4xl font-bold text-gray-900">
-            My Development Experience
+          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-gray-900">
+            Crafting Digital Excellence
           </h2>
-          <div className="mt-6 h-0.5 w-16 mx-auto bg-gradient-to-r from-gray-100 via-gray-400 to-gray-100" />
+          <div className="mt-5 h-1 w-20 mx-auto bg-gradient-to-r from-blue-400 to-blue-600 rounded-full" />
           <p className="mt-6 text-lg text-gray-600 max-w-3xl mx-auto">
-            Specialized frontend expertise with full-stack capabilities
+            Specialized in frontend architecture with 8 years of experience,
+            complemented by modern backend solutions
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {/* Frontend Experience */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="bg-gray-50 p-6 rounded-xl border border-gray-200 hover:border-sky-200 transition-colors"
+            className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all"
           >
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 rounded-lg bg-sky-50 text-sky-600">
-                <FaReact size={20} />
+            <div className="flex items-center gap-5 mb-6">
+              <div className="p-4 rounded-xl bg-blue-50 text-blue-600">
+                <FaReact size={24} />
               </div>
-              <h3 className="text-lg font-semibold text-gray-800">Frontend</h3>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-800">
+                  Frontend Development
+                </h3>
+                <p className="text-blue-600 font-medium">Specialization</p>
+              </div>
             </div>
-            <div className="flex items-end gap-2 mb-4">
-              <span className="text-4xl font-bold text-gray-900">
+            <div className="flex items-end gap-3 mb-6">
+              <span className="text-5xl font-bold text-gray-900">
                 {years.frontend}
               </span>
-              <span className="text-gray-500 mb-1">years</span>
+              <span className="text-xl text-gray-500 mb-1">Years</span>
             </div>
-            <p className="text-gray-600 mb-4 text-sm">
-              Specialized in React ecosystem and modern web development
+            <p className="text-gray-600 mb-6">
+              Extensive experience building complex, performant web applications
+              with modern JavaScript frameworks
             </p>
-            <div className="flex flex-wrap gap-2">
-              {["React", "Next.js", "TypeScript", "Framer Motion"].map((tech) => (
-                <span
-                  key={tech}
-                  className="text-xs font-medium px-2.5 py-1 rounded-full bg-white text-gray-700 border border-gray-200"
-                >
-                  {tech}
-                </span>
-              ))}
+            <div className="mb-6">
+              <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                Core Technologies
+              </h4>
+              <div className="flex gap-3">
+                {expertiseAreas[0].tools.map((tool, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg border border-gray-200"
+                  >
+                    {tool.icon}
+                    <span className="text-sm font-medium">{tool.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                Key Capabilities
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {expertiseAreas[0].highlights.map((item) => (
+                  <span
+                    key={item}
+                    className="text-xs font-medium px-3 py-1.5 rounded-full bg-white text-gray-700 border border-gray-200"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
           </motion.div>
 
@@ -173,67 +204,61 @@ const Xp = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="bg-gray-50 p-6 rounded-xl border border-gray-200 hover:border-green-200 transition-colors"
+            className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all"
           >
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 rounded-lg bg-green-50 text-green-600">
-                <FaNodeJs size={20} />
+            <div className="flex items-center gap-5 mb-6">
+              <div className="p-4 rounded-xl bg-green-50 text-green-600">
+                <FaCloud size={24} />
               </div>
-              <h3 className="text-lg font-semibold text-gray-800">Backend</h3>
+              <div>
+                <h3 className="text-xl font-semibold text-gray-800">
+                  Backend & BaaS
+                </h3>
+                <p className="text-green-600 font-medium">
+                  Complementary Skills
+                </p>
+              </div>
             </div>
-            <div className="flex items-end gap-2 mb-4">
-              <span className="text-4xl font-bold text-gray-900">
+            <div className="flex items-end gap-3 mb-6">
+              <span className="text-5xl font-bold text-gray-900">
                 {years.backend}
               </span>
-              <span className="text-gray-500 mb-1">years</span>
+              <span className="text-xl text-gray-500 mb-1">Years</span>
             </div>
-            <p className="text-gray-600 mb-4 text-sm">
-              Developing server applications and APIs
+            <p className="text-gray-600 mb-6">
+              Implementing modern backend solutions with serverless
+              architectures and BaaS platforms
             </p>
-            <div className="flex flex-wrap gap-2">
-              {["Node.js", "Express", "REST APIs", "Authentication"].map((tech) => (
-                <span
-                  key={tech}
-                  className="text-xs font-medium px-2.5 py-1 rounded-full bg-white text-gray-700 border border-gray-200"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Database Experience */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
-            className="bg-gray-50 p-6 rounded-xl border border-gray-200 hover:border-amber-200 transition-colors"
-          >
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 rounded-lg bg-amber-50 text-amber-600">
-                <FaDatabase size={20} />
+            <div className="mb-6">
+              <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                Core Technologies
+              </h4>
+              <div className="flex gap-3">
+                {expertiseAreas[1].tools.map((tool, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg border border-gray-200"
+                  >
+                    {tool.icon}
+                    <span className="text-sm font-medium">{tool.name}</span>
+                  </div>
+                ))}
               </div>
-              <h3 className="text-lg font-semibold text-gray-800">Database</h3>
             </div>
-            <div className="flex items-end gap-2 mb-4">
-              <span className="text-4xl font-bold text-gray-900">
-                {years.database}
-              </span>
-              <span className="text-gray-500 mb-1">years</span>
-            </div>
-            <p className="text-gray-600 mb-4 text-sm">
-              NoSQL and real-time database solutions
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {["Firebase", "MongoDB", "Data Modeling", "Real-time"].map((tech) => (
-                <span
-                  key={tech}
-                  className="text-xs font-medium px-2.5 py-1 rounded-full bg-white text-gray-700 border border-gray-200"
-                >
-                  {tech}
-                </span>
-              ))}
+            <div>
+              <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                Key Capabilities
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {expertiseAreas[1].highlights.map((item) => (
+                  <span
+                    key={item}
+                    className="text-xs font-medium px-3 py-1.5 rounded-full bg-white text-gray-700 border border-gray-200"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
@@ -242,12 +267,16 @@ const Xp = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="space-y-6"
+          transition={{ delay: 0.3 }}
+          className="space-y-8"
         >
-          <h3 className="text-xl font-semibold text-gray-800 mb-6">
+          <h3 className="text-2xl font-semibold text-gray-800 mb-2">
             Expertise Breakdown
           </h3>
+          <p className="text-gray-600 max-w-3xl">
+            Detailed overview of my technical capabilities and professional
+            experience across different domains.
+          </p>
 
           {expertiseAreas.map((area, index) => (
             <motion.div
@@ -256,33 +285,58 @@ const Xp = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 * index }}
-              className="group bg-white p-6 rounded-xl border border-gray-200 hover:shadow-md transition-all"
+              className="group bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all"
             >
-              <div className="flex flex-col md:flex-row gap-6">
+              <div className="flex flex-col md:flex-row gap-8">
                 <div className="flex-shrink-0">
-                  <div className="p-3 rounded-lg bg-gray-50 text-gray-700 border border-gray-200 group-hover:bg-indigo-50 group-hover:text-indigo-600 group-hover:border-indigo-100 transition-colors">
+                  <div className="p-5 rounded-xl bg-gray-50 text-gray-700 border border-gray-200 group-hover:bg-blue-50 group-hover:text-blue-600 group-hover:border-blue-100 transition-colors">
                     {area.icon}
                   </div>
                 </div>
                 <div className="flex-1">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
-                    <h3 className="text-lg font-semibold text-gray-800">
-                      {area.title}
-                    </h3>
-                    <span className="text-sm font-medium px-3 py-1 rounded-full bg-gray-100 text-gray-700">
-                      {area.years} years experience
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-800">
+                        {area.title}
+                      </h3>
+                      <p className="text-gray-500">{area.description}</p>
+                    </div>
+                    <span className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-600 text-sm font-medium">
+                      {area.years}+ years experience
                     </span>
                   </div>
-                  <p className="text-gray-600 mb-4">{area.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {area.highlights.map((highlight) => (
-                      <span
-                        key={highlight}
-                        className="text-xs font-medium px-3 py-1 rounded bg-gray-50 text-gray-600 border border-gray-200"
-                      >
-                        {highlight}
-                      </span>
-                    ))}
+
+                  <div className="mb-6">
+                    <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                      Key Highlights
+                    </h4>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {area.highlights.map((highlight, i) => (
+                        <li key={i} className="flex items-center">
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mr-2"></span>
+                          <span className="text-gray-700">{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                      Technologies
+                    </h4>
+                    <div className="flex flex-wrap gap-3">
+                      {area.tools.map((tool, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg border border-gray-200"
+                        >
+                          <span className="text-blue-600">{tool.icon}</span>
+                          <span className="text-sm font-medium">
+                            {tool.name}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -295,23 +349,24 @@ const Xp = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.6 }}
-          className="mt-16 bg-gradient-to-r from-indigo-50 to-blue-50 p-8 rounded-xl border border-indigo-100"
+          className="mt-16 bg-gradient-to-r from-blue-500 to-blue-600 p-8 rounded-xl shadow-lg"
         >
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                Comprehensive Experience
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="text-white">
+              <h3 className="text-xl font-semibold mb-3">
+                Total Professional Experience
               </h3>
-              <p className="text-gray-600 max-w-lg">
-                With {years.total} years in web development, I bring deep frontend expertise 
-                complemented by growing backend knowledge and database experience.
+              <p className="max-w-lg opacity-90">
+                With {years.total} years in web development, I combine deep
+                frontend expertise with modern backend solutions to deliver
+                exceptional digital products.
               </p>
             </div>
-            <div className="flex items-end gap-2">
-              <span className="text-5xl font-bold text-gray-900">
+            <div className="flex items-end gap-3">
+              <span className="text-6xl font-bold text-white">
                 {years.total}
               </span>
-              <span className="text-xl text-gray-600 mb-1">years</span>
+              <span className="text-2xl text-white opacity-90 mb-1">Years</span>
             </div>
           </div>
         </motion.div>
@@ -320,4 +375,4 @@ const Xp = () => {
   );
 };
 
-export default Xp;
+export default ExperienceSection;
