@@ -194,12 +194,11 @@ const App = () => {
                   </div>
 
                   <h2 className="text-gray-600 text-xl sm:text-2xl md:text-3xl font-medium">
-                    Frontend Developer & UI Specialist
+                    Frontend Developer
                   </h2>
 
                   <p className="text-gray-500 text-base md:text-lg max-w-lg leading-relaxed">
-                    I craft pixel-perfect, responsive interfaces with React and modern web technologies. 
-                    Focused on creating seamless user experiences with clean, efficient code.
+                  Building React interfaces that look and feel perfect
                   </p>
                 </div>
 
